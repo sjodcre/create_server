@@ -28,36 +28,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const database ={
-	users:[
-	{
-		id:'123',
-		name: 'john',
-		email : 'jotn@gmail.com',
-		password: 'abctest',
-		entries: 0,
-		joined: new Date()
-	},
-	{
-		id:'124',
-		name: 'johnny',
-		email : 'jotnny@gmail.com',
-		password: 'abctest123',
-		entries: 0,
-		joined: new Date()
-	},
-	],
-	login:[
-		{
-			id:'987',
-			hash:'',
-			email:'dcd@gmail.com'
-		}
-	]
-}
 
 app.get('/',(req,res)=>{
-	res.send(database.users);
+	res.redirect('/signin');
 });
 
 app.post('/signin',signin.handleSignin(db, bcrypt));
@@ -72,7 +45,7 @@ app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
 
 
 const PORT = process.env.PORT
-app.listen(PORT, () =>{
+app.listen(PORT || 3001, () =>{
 	console.log(`app is running on port ${PORT}`);
-	console.log(process.env.PORT);
+	// console.log(process.env.PORT);
 })
