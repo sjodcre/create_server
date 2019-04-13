@@ -28,7 +28,7 @@ app.use(cors());
 
 
 app.get('/',(req,res)=>{
-	res.redirect('/signin');
+	res.send('This is the server end!');
 });
 
 app.post('/signin',signin.handleSignin(db, bcrypt));
