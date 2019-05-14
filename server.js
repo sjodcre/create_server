@@ -45,15 +45,20 @@ app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)})
 
 app.post('/submitform', (req,res) => {
 	console.log(req.body);
-	fs.appendFile('./messages.txt', req.body.name + '\t' + req.body['email-address'] + '\t' 
-		+ req.body['contact-number'] + '\t' + req.body.subject + '\t' + req.body.message + '\n', err => {
-		if (err) {
-			console.log(err)
-		}
-	} );
-
-
-	res.send('okay');
+	const {name, email, number, subject, message} = req.body;
+	db('contactform')
+		.returning('*')
+		.insert({
+			name:name,
+			email:email,
+			number:number,
+			subject:subject,
+			message:message,
+			date: new Date()
+		})
+		.then(response => {
+			res.json(response);
+		})
 })
 
 
